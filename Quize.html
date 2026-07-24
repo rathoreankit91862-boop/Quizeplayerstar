@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Quiz Game</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>🎮 Quiz Game</h1>
+
+
+<h3 id="playerNameShow">
+Player:
+</h3>
+
+
+
+<h2 id="questionNumber">
+Question
+</h2>
+
+
+
+<p id="questionText">
+Loading Question...
+</p>
+
+
+
+<div id="options">
+
+<button class="option-btn" onclick="checkAnswer(0)">
+A
+</button>
+
+<button class="option-btn" onclick="checkAnswer(1)">
+B
+</button>
+
+<button class="option-btn" onclick="checkAnswer(2)">
+C
+</button>
+
+<button class="option-btn" onclick="checkAnswer(3)">
+D
+</button>
+
+</div>
+
+
+
+<div class="score-box">
+
+Score:
+<span id="score">0</span>
+
+</div>
+
+
+
+<div class="score-box">
+
+🔥 Streak:
+<span id="streak">0</span>
+
+</div>
+
+
+
+<!-- Strategy System -->
+
+<div id="strategyBox" class="strategy-box" style="display:none;">
+
+🔥 Strategy Unlocked!
+
+<br><br>
+
+
+<button onclick="useStrategy()">
+🎯 Use Strategy
+</button>
+
+
+<button onclick="skipStrategy()">
+⏭️ Skip Strategy
+</button>
+
+
+</div>
+
+
+<div id="strategyTargetBox" class="strategy-box" style="display:none;">
+
+🎯 Select Target Player:
+
+<select id="targetPlayer">
+
+</select>
+
+<br><br>
+
+<button onclick="applyStrategy()">
+⚡ Apply Strategy
+</button>
+
+</div>
+
+
+
+
+<button onclick="nextQuestion()" id="nextBtn">
+
+Next Question
+
+</button>
+
+
+
+</div>
+
+
+
+<script src="quiz.js"></script>
+
+
+</body>
+
+</html>
