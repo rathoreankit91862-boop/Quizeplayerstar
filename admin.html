@@ -1,0 +1,176 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Panel</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>👨‍💼 Admin Panel</h1>
+
+
+<input type="text" id="adminName" placeholder="Admin Name">
+
+
+
+<button onclick="createGame()">
+Create Game
+</button>
+
+
+
+<h3 id="codeShow"></h3>
+
+
+
+<hr>
+
+
+
+<h2>Add Questions</h2>
+
+
+
+<textarea 
+id="questionsText"
+rows="12"
+style="width:100%;"
+placeholder="Question:
+Option1:
+Option2:
+Option3:
+Option4:
+Answer:"></textarea>
+
+
+
+
+<button onclick="saveQuestions()">
+Save Questions
+</button>
+
+
+
+
+<button onclick="startGame()">
+Start Game
+</button>
+
+
+
+
+<p id="adminMessage"></p>
+
+
+
+</div>
+
+
+
+
+<script>
+
+
+function createGame(){
+
+
+let admin = document.getElementById("adminName").value;
+
+
+
+if(admin==""){
+
+alert("Enter Admin Name");
+
+return;
+
+}
+
+
+
+let code = "QUIZ" + Math.floor(1000 + Math.random()*9000);
+
+
+
+localStorage.setItem("adminName",admin);
+
+localStorage.setItem("gameCode",code);
+
+
+
+document.getElementById("codeShow").innerHTML =
+"Game Code: " + code;
+
+
+
+alert("Game Created Successfully\nCode: " + code);
+
+
+
+}
+
+
+
+
+function saveQuestions(){
+
+
+
+let text = document.getElementById("questionsText").value;
+
+
+
+if(text==""){
+
+alert("Please paste questions");
+
+return;
+
+}
+
+
+
+localStorage.setItem("questionsText",text);
+
+
+
+alert("Questions Saved Successfully");
+
+
+
+}
+
+
+
+
+function startGame(){
+
+
+window.location.href="index.html";
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
