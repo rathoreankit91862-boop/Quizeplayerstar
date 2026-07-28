@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,39 +12,25 @@
 
 </head>
 
-
 <body>
-
 
 <div class="container">
 
-
 <h1>👨‍💼 Admin Panel</h1>
-
 
 <input type="text" id="adminName" placeholder="Admin Name">
 
-
-
 <button onclick="createGame()">
-Create Game
+🎮 Create Game
 </button>
-
-
 
 <h3 id="codeShow"></h3>
 
-
-
 <hr>
 
+<h2>📝 Add Questions</h2>
 
-
-<h2>Add Questions</h2>
-
-
-
-<textarea 
+<textarea
 id="questionsText"
 rows="12"
 style="width:100%;"
@@ -57,33 +41,54 @@ Option3:
 Option4:
 Answer:"></textarea>
 
-
-
-
 <button onclick="saveQuestions()">
-Save Questions
+💾 Save Questions
 </button>
-
-
-
 
 <button onclick="startGame()">
-Start Game
+▶️ Start Game
 </button>
 
+<hr>
 
+<h2>👥 Players Joined</h2>
 
+<p>
+Total Players:
+<b id="playerCount">0</b>
+</p>
 
-<p id="adminMessage"></p>
+<div id="playersBox">
 
-
+No Players Joined
 
 </div>
 
+<hr>
+
+<h2>🏆 Live Leaderboard</h2>
+
+<div id="leaderboardBox">
+
+No Scores Yet
+
+</div>
+
+<hr>
+
+<h2>📊 Game Status</h2>
+
+<div id="gameStatus">
+
+Waiting...
+
+</div>
+
+<p id="adminMessage"></p>
+
+</div>
 
 <script type="module" src="admin.js"></script>
-
-
 
 </body>
 
