@@ -1,6 +1,17 @@
+import { db } from "./firebase.js";
+
+import {
+    ref,
+    get,
+    set,
+    push
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+
 // Join Game Function
 
-function joinGame(){
+window.joinGame = async function(){
+
 
     let name = document.getElementById("playerName").value.trim();
 
@@ -9,54 +20,77 @@ function joinGame(){
     let message = document.getElementById("message");
 
 
-    let correctCode = localStorage.getItem("gameCode");
-
-
 
     if(name=="" || code==""){
 
         message.innerHTML="⚠ Please enter name and game code";
-
         return;
 
     }
 
 
 
-    if(code !== correctCode){
+    // Check Game Code From Firebase
+
+    let gameRef = ref(db,"games/"+code);
+
+    let snapshot = await get(gameRef);
+
+
+
+    if(!snapshot.exists()){
 
         message.innerHTML="❌ Wrong Game Code";
-
         return;
 
     }
 
 
 
-    localStorage.setItem("playerName",name);
+    // Create New Player ID
+
+    let playerRef = push(
+        ref(db,"games/"+code+"/players")
+    );
+
+
+    let playerId = playerRef.key;
 
 
 
-    // Save Player List
+    // Save Player In Firebase
 
-    let players = JSON.parse(
-        localStorage.getItem("players")
-    ) || [];
+    await set(playerRef,{
 
-
-
-    players.push({
+        id:playerId,
 
         name:name,
-        score:0
+
+        score:0,
+
+        answers:{}
 
     });
 
 
 
+    // Save Current Player Info
+
     localStorage.setItem(
-        "players",
-        JSON.stringify(players)
+        "playerName",
+        name
+    );
+
+
+    localStorage.setItem(
+        "gameCode",
+        code
+    );
+
+
+    localStorage.setItem(
+        "playerId",
+        playerId
     );
 
 
