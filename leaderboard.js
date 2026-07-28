@@ -1,62 +1,47 @@
-// Leaderboard System
+import { db } from "./firebase.js";
+
+import {
+    ref,
+    get
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
 
 
-let playerName = localStorage.getItem("playerName") || "Player";
-
-let score = Number(localStorage.getItem("score")) || 0;
+let gameCode = localStorage.getItem("gameCode");
 
 
-let players = JSON.parse(
-    localStorage.getItem("players")
-) || [];
+async function loadLeaderboard(){
 
+    let box = document.getElementById("leaderboardBox");
 
-// Add Current Player
+    let snapshot = await get(
+        ref(db,"games/"+gameCode+"/players")
+    );
 
-players.push({
+    if(!snapshot.exists()){
 
-    name: playerName,
-    score: score
+        box.innerHTML = "No Players";
+        return;
 
-});
+    }
 
+    let players = Object.values(snapshot.val());
 
-// Save Players
+    players.sort((a,b)=>b.score-a.score);
 
-localStorage.setItem(
-    "players",
-    JSON.stringify(players)
-);
+    let html="";
 
+    players.forEach((player,index)=>{
 
-// Sort By Score
+        html += `
+        <p>
+        ${index+1}. ${player.name} - ${player.score} Points
+        </p>
+        `;
 
-players.sort(function(a,b){
+    });
 
-    return b.score - a.score;
+    box.innerHTML = html;
 
-});
+}
 
-
-// Display Leaderboard
-
-let box = document.getElementById("leaderboardBox");
-
-
-let html = "";
-
-
-players.forEach(function(player,index){
-
-    html += `
-
-    <p>
-    ${index+1}. ${player.name} - ${player.score} Points
-    </p>
-
-    `;
-
-});
-
-
-box.innerHTML = html;
+loadLeaderboard();
