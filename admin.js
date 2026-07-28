@@ -1,73 +1,136 @@
-
 import { db } from "./firebase.js";
 
-import { ref, set } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+import { 
+    ref, 
+    set 
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+
 alert("Admin JS Loaded");
 
-window.createGame = function(){
 
-let admin = document.getElementById("adminName").value;
+// Create Game
+
+window.createGame = async function(){
 
 
-if(admin==""){
-alert("Enter Admin Name");
-return;
+    let admin = document.getElementById("adminName").value.trim();
+
+
+    if(admin==""){
+
+        alert("Enter Admin Name");
+        return;
+
+    }
+
+
+
+    let code = "QUIZ" + Math.floor(1000 + Math.random()*9000);
+
+
+
+    await set(
+        ref(db,"games/"+code),
+        {
+
+            adminName:admin,
+
+            gameCode:code,
+
+            status:"waiting"
+
+        }
+
+    );
+
+
+
+    // Save only for Admin session
+
+    localStorage.setItem(
+        "adminGameCode",
+        code
+    );
+
+
+
+    document.getElementById("codeShow").innerHTML =
+    "Game Code: "+code;
+
+
+
+    alert("Game Created Successfully");
+
+
 }
 
 
-let code = "QUIZ" + Math.floor(1000 + Math.random()*9000);
 
 
-set(ref(db,"games/"+code),{
 
-adminName: admin,
-gameCode: code
+// Save Questions
 
-});
+window.saveQuestions = async function(){
 
 
-localStorage.setItem("gameCode",code);
+    let text =
+    document.getElementById("questionsText").value;
 
 
-document.getElementById("codeShow").innerHTML =
-"Game Code: " + code;
+
+    if(text==""){
+
+        alert("Please paste questions");
+        return;
+
+    }
 
 
-alert("Game Created Successfully");
+
+    let code =
+    localStorage.getItem("adminGameCode");
+
+
+
+    if(!code){
+
+        alert("Create Game First");
+        return;
+
+    }
+
+
+
+    await set(
+
+        ref(db,"games/"+code+"/questions"),
+
+        {
+
+            data:text
+
+        }
+
+    );
+
+
+
+    alert("Questions Saved Successfully");
+
 
 }
 
 
 
-window.saveQuestions = function(){
-
-let text = document.getElementById("questionsText").value;
 
 
-if(text==""){
-alert("Please paste questions");
-return;
-}
+// Start Game
+
+window.startGame=function(){
 
 
-let code = localStorage.getItem("gameCode");
+    window.location.href="index.html";
 
-
-set(ref(db,"games/"+code+"/questions"),{
-
-data:text
-
-});
-
-
-alert("Questions Saved Successfully");
-
-}
-
-
-
-window.startGame = function(){
-
-window.location.href="index.html";
 
 }
