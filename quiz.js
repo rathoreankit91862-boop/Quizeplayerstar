@@ -132,6 +132,7 @@ function showQuestion(){
     buttons[2].innerHTML="C. "+q.options[2];
     buttons[3].innerHTML="D. "+q.options[3];
 
+    
 
     buttons.forEach(btn=>{
 
